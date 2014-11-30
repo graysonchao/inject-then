@@ -9,18 +9,10 @@ var Hapi    = require('hapi');
 
 describe('inject-then', function () {
 
-  function register (options) {
-    server.pack.register({
-      plugin: require('../'),
-      options: options
-    }, function (err) {
-      if (err) throw err;
-    });
-  }
-
   var server;
   beforeEach(function () {
     server = new Hapi.Server();
+    server.connection();
     server.route({
       path: '/test',
       method: 'GET',
@@ -29,6 +21,15 @@ describe('inject-then', function () {
       }
     });
   });
+
+  function register (options) {
+    server.register({
+      register: require('../'),
+      options: options
+    }, function (err) {
+      if (err) throw err;
+    });
+  }
 
   it('defaults to Bluebird', function () {
     register();
