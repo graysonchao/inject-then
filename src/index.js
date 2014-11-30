@@ -23,7 +23,7 @@ exports.register = function (server, options, next) {
     }
   }
   server.connections.forEach(attach);
-  attach(server.connections[0].server);
+  attach(server._server);
   next();
 };
 
