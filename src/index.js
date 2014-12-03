@@ -16,14 +16,14 @@ exports.register = function (server, options, next) {
       return response;
     });
   }
+
   function attach (destination) {
-    destination.injectThen = injectThen;
-    if (options.replace) {
-      destination.inject = injectThen;
+    if (!destination.hasOwnProperty('injectThen')) {
+      destination.decorate('server', 'injectThen', injectThen);
     }
   }
-  server.connections.forEach(attach);
-  attach(server._server);
+
+  attach(server);
   next();
 };
 

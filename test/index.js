@@ -52,13 +52,6 @@ describe('inject-then', function () {
     expect(server).to.itself.respondTo('injectThen');
   });
 
-  it('can replace server.inject', function () {
-    register({
-      replace: true
-    });
-    expect(server.inject).to.equal(server.injectThen);
-  });
-
   it('resolves with the injection response', function () {
     register();
     return server.injectThen('/test').then(function (response) {
